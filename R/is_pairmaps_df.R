@@ -32,9 +32,11 @@
 
 
 is_pairmaps_df <- function(x) {
+  # To begin, `x` has to be a data frame with the special class from corrr:
   if (!(is.data.frame(x) && inherits(x, "cor_df"))) {
     return(FALSE)
   }
+  # It also needs to have exactly one class that starts on `pairmaps_df_`:
   classes <- class(x)
   length(classes[grepl("^pairmaps_df_", classes)]) == 1L
 }

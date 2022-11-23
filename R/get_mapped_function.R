@@ -45,6 +45,8 @@ unclass_pairmaps <- function(pairmaps_df) {
 #' get_mapped_function_name(data = df)
 
 get_mapped_function <- function(data) {
+  # Retrieve a string that contains the function's name from `data`, then parse
+  # and evaluate it to an actual function:
   name <- get_mapped_function_name(data)
   rlang::eval_tidy(rlang::parse_expr(name))
 }
@@ -54,6 +56,7 @@ get_mapped_function <- function(data) {
 #' @export
 
 get_mapped_function_name <- function(data) {
+  # Check that `data` has exactly one class that starts on `pairmaps_df_`:
   if (!is_pairmaps_df(data)) {
     msg1 <- "It doesn't seem to be the output of a function"
     msg1 <- paste(msg1, "created by `as_colpair_mapper()`.")
@@ -65,6 +68,8 @@ get_mapped_function_name <- function(data) {
       "x" = msg2
     ))
   }
+  # Subset this class and remove the `pairmaps_df_` prefix. The substring left
+  # behind by this procedure will be the function name:
   classes <- class(data)
   sub("pairmaps_df_", "", classes[grepl("^pairmaps_df_", classes)])
 }

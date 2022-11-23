@@ -60,16 +60,21 @@
 
 
 as_colpair_mapper <- function(f, eval_f = TRUE) {
+  # Capture the name of `f` and, by default, make sure to evaluate `f` itself:
   f_value <- substitute(f)
   f_name <- deparse(f_value)
   if (eval_f) {
     f_value <- f
   }
-  # Construct the new `corrr::colpair_map()` wrapper:
+  # Construct the new `corrr::colpair_map()` wrapper from its three components
+  # (see Hadley Wickham, *Advanced R*, ch. 6.2.1;
+  # https://adv-r.hadley.nz/functions.html#fun-components):
   rlang::new_function(
+    # 1. Formals (i.e., list of arguments)
     args = as.pairlist(alist(
       .data = , ... = , .diagonal = NA, .quiet = FALSE
     )),
+    # 2. Body
     body = rlang::expr({
       f_name <- `!!`(f_name)
       out <- corrr::colpair_map(
@@ -84,6 +89,7 @@ as_colpair_mapper <- function(f, eval_f = TRUE) {
       class(out) <- c(paste0("pairmaps_df_", f_name), class(out))
       out
     }),
+    # 3. Environment
     env = rlang::caller_env()
   )
 }
