@@ -59,60 +59,11 @@
 #' # and then calls that new function on `mtcars`.)
 
 
-
-# With `factory::build_factory()` -----------------------------------------
-
-# This "pre-source" code is outcommented here in order not to take on the
-# factory package as a dependency. When run interactively, however, it prints
-# valid code into the console which I pasted further below...
-
-# factory::build_factory(
-#   fun = function(.data, ..., .diagonal = NA, .quiet = FALSE) {
-#     # f_name <- rlang::caller_env()
-#     out <- corrr::colpair_map(.data = .data, .f = f, ..., .diagonal = .diagonal)
-#     f_name <- TEMP
-#     if (!.quiet) {
-#       rlang::inform(paste0("!" = "Applying `", f_name,
-#                            "()` to each column pair"))
-#     }
-#     class(out) <- c(paste0("pairmaps_df_", f_name), class(out))
-#     out
-#   },
-#   f
-# )
-
-
-# ... and which needs to be manually changed as follows:
-
-# 1. Add the name `as_colpair_mapper` and restyle the first line.
-
-# 2. Insert this code right before the `rlang::new_function()` call:
-# f_name <- deparse(substitute(f))
-# if (eval_f) {
-#   f_value <- f
-# } else {
-#   f_value <- rlang::parse_expr(f_name)
-# }
-
-# 3. After the `rlang::expr()` call, replace `TEMP` by:
-# `!!`(f_name)
-
-
-# TO DO: Debug `expr` argument. For example, this fails:
-# as_colpair_mapper(var, expr = TRUE)(mtcars)
-
 as_colpair_mapper <- function(f, eval_f = TRUE) {
-  # f_name <- deparse(substitute(f))
-  # if (eval_f) {
-  #   f_value <- f
-  # } else {
-  #   f_value <- rlang::parse_expr(f_name)
-  # }
-
   f_value <- substitute(f)
   f_name <- deparse(f_value)
   if (eval_f) {
-    f_value <- f  # eval(f_value)
+    f_value <- f
   }
   # Construct the new `corrr::colpair_map()` wrapper:
   rlang::new_function(
@@ -121,13 +72,8 @@ as_colpair_mapper <- function(f, eval_f = TRUE) {
     )),
     body = rlang::expr({
       f_name <- `!!`(f_name)
-      # if (`!!`(eval_f)) {
-      #   f_value <- `!!`(rlang::parse_expr(f_name))
-      # } else {
-      #   f_value <- rlang::as_function(f_name)
-      # }
       out <- corrr::colpair_map(
-        .data = .data, .f = `!!`(f_value), # `!!`(f),
+        .data = .data, .f = `!!`(f_value),
         ..., .diagonal = .diagonal
       )
       if (!.quiet) {
@@ -141,31 +87,4 @@ as_colpair_mapper <- function(f, eval_f = TRUE) {
     env = rlang::caller_env()
   )
 }
-
-
-
-# # Manually (stale for now) ----------------------------------------------
-#
-# as_colpair_mapper <- function(.f, ..., .diagonal = NA) {
-#   force(.f)
-#   force(.diagonal)
-#   function(data, ..., diagonal = .diagonal) {
-#     corrr::colpair_map(data, .f, ..., .diagonal = diagonal)
-#   }
-#
-# }
-#
-# # Basic function, from `?colpair_map()`:
-# calc_p_value <- function(vec_a, vec_b) {
-#   t.test(vec_a, vec_b)$p.value
-# }
-#
-# p_value_map <- as_colpair_mapper(calc_p_value)
-#
-# p_value_map(mtcars)
-#
-# p_value_map_manual <- function(data, ..., diagonal = NA) {
-#   corrr::colpair_map(data, calc_p_value, ..., .diagonal = diagonal)
-# }
-
 

@@ -13,7 +13,6 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.2
 Collate: 
     'as_colpair_mapper.R'
-    'cov2cor.R'
     'is_pairmaps_df.R'
     'get_mapped_function.R'
     'vary-covary.R'
