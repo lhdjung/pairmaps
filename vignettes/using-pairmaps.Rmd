@@ -1,0 +1,137 @@
+---
+title: "Using pairmaps"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Using pairmaps}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+bibliography: references.bib
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r include=FALSE}
+# Dev only: Load pairmaps from within pairmaps
+devtools::load_all(".")
+library(corrr)
+```
+
+This vignette shows you when and how to use pairmaps.
+
+```{r setup, eval=FALSE}
+library(corrr)
+library(pairmaps)
+```
+
+## Basics
+
+The main function of the package is `as_colpair_mapper()`, which creates wrapper functions around `corrr::colpair_map()`. Each wrapper is bound to one specific other function which it applies to a data frame. For example:
+
+```{r}
+max_sum <- function(x, y) {
+  max(sum(x), sum(y))
+}
+max_sum_map <- as_colpair_mapper(f = max_sum)
+max_sum_map(mtcars)
+```
+
+Use `as_colpair_mapper()` if you plan to reuse the resulting function, like `max_sum_map()`, multiple times. A new wrapper function would add little value if you only want to use it once. In this case, directly calling `corrr::colpair_map()` might be the better option.
+
+## More with corrr
+
+Running your data through `colpair_map()` --- directly or via a wrapper function made by `as_colpair_mapper()` --- will always return a `cor_df` tibble. `cor_df` is the same format as a data frame of correlations returned by `corrr::correlate()`, but it's not limited to computing correlations. Instead, `colpair_map()` arranges its results in this special format after applying any user-specified function which has at least two arguments.
+
+This enables you to plug your analysis into any R workflow focused on data frames, but especially the corrr package's arsenal of exploratory functions. Read about them in the [*Using corrr* vignette](https://corrr.tidymodels.org/articles/using-corrr.html).
+
+## Assignment and copying
+
+### Not evaluating too early
+
+`as_colpair_mapper()` has one more argument, the Boolean `eval_f`. If you set it to `FALSE`, the input function will only appear within the output function by name. Look at `.f = max_sum` here:
+
+```{r}
+as_colpair_mapper(f = max_sum, eval_f = FALSE)
+```
+
+This is useful if you want to copy and paste the printed output into a script, especially within a package. (See below if you don't work inside of a package.) The default, `eval_f = TRUE`, would replace the name of `max_sum()` by its function definition --- i.e., its list of arguments along with the entire function body:
+
+```{r}
+as_colpair_mapper(f = max_sum)
+```
+
+You can imagine that this might be confusing with longer functions than `max_sum()`. However, there is a deeper problem still: The factory-made function would only reflect the version of `max_sum()` at the specific point in time when you run `as_colpair_mapper()`. If `max_sum()` changes later on, you would then have to manually update the copied function, even when working within a package. Otherwise, it will rely on an outdated version of `max_sum()`!
+
+If you aren't developing a package but copying the output of `as_colpair_mapper()` into some other script, you will have to manually update it anyways if you run `as_colpair_mapper()` with `eval_f = TRUE`.
+
+### Not evaluating too late
+
+The purpose of the default `eval_f = TRUE` is to prevent the reverse problem. If you don't copy and paste the output function but assign it to a variable straight away, you might run into a subtle issue with lazy evaluation (Wickham 2019, [ch. 10.2.3](https://adv-r.hadley.nz/function-factories.html#forcing-evaluation)):
+
+```{r}
+max_sum <- function(x, y) {
+  max(sum(x), sum(y))
+}
+max_sum_map <- as_colpair_mapper(f = max_sum, eval_f = FALSE)
+max_sum <- function(...) {
+  sum1 <- sum(iris$Petal.Width)
+  sum2 <- sum(mtcars$hp)
+  sum3 <- sum(sunspots)
+  max(sum1, sum2, sum3)
+}
+max_sum_map(mtcars)
+```
+
+What happens here? The `f = max_sum` argument is only evaluated when the output function, `max_sum_map()`, is eventually called. Before it is, however, the value of `max_sum()` changes to a different function, which is then applied in place of the original `max_sum()`.
+
+I made the point very apparent because the new `max_sum()` function returns a constant output when the tibble should include many different values. In more realistic cases, the problem might be harder to spot, and it would be safer to evaluate `f` to the original value of `max_sum()` right when `as_colpair_mapper()` creates `max_sum_map()`. The default `eval_f = TRUE` provides this safety.
+
+If the new value can't be interpreted as one or more functions, the bug doesn't occur but an error is thrown:
+
+```{r, error=TRUE}
+max_sum <- function(x, y) {
+  max(sum(x), sum(y))
+}
+max_sum_map <- as_colpair_mapper(f = max_sum, eval_f = FALSE)
+max_sum <- max(sum(iris$Petal.Length, iris$Petal.Width))
+max_sum_map(mtcars)
+```
+
+## Retrieving the mapped function
+
+In case you have a pairmaps data frame but you aren't sure which function was applied to the column pairs, you can call `get_mapped_function()` with that data frame. Note that it will return the function as it is defined the moment you call `get_mapped_function()`. This means you can't use it to retrieve any earlier functions by the same name.
+
+```{r}
+max_sum <- function(x, y) {
+  max(sum(x), sum(y))
+}
+max_sum_map <- as_colpair_mapper(f = max_sum)
+df <- max_sum_map(mtcars)
+
+get_mapped_function(df)
+```
+
+If all you need is the name of the mapped function, call `get_mapped_function_name()` instead:
+
+```{r}
+get_mapped_function_name(df)
+```
+
+Sometimes, you may not be sure if a data frame was returned by a function which, in turn, was made by `as_colpair_mapper()`. Test this with `is_pairmaps_df()`:
+
+```{r}
+is_pairmaps_df(df)
+is_pairmaps_df(iris)
+```
+
+`get_mapped_function()` and `get_mapped_function_name()` internally call `is_pairmaps_df()` to make sure they actually deal with such a data frame. If the test fails, they will throw an error.
+
+### Citation dummy {style="display: none;"}
+
+*(Here is an extra section. Its display is suppressed via the CSS element `display: none;` because its only purpose is to generate the citation @wickham2019 --- I want to style the citation in the text above more flexibly than the format allows (including a URL) but still get the reference pasted at the bottom.)*
+
+# References
