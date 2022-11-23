@@ -15,8 +15,13 @@ Collate:
     'as_colpair_mapper.R'
     'is_pairmaps_df.R'
     'get_mapped_function.R'
+    'global.R'
     'vary-covary.R'
 Suggests: 
+    corrr,
+    devtools,
     knitr,
+    purrr,
+    rlang,
     rmarkdown
 VignetteBuilder: knitr
