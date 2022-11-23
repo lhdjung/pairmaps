@@ -4,7 +4,7 @@
 \alias{as_colpair_mapper}
 \title{Adverb for new column-pair mapping functions}
 \usage{
-as_colpair_mapper(f, eval_f = TRUE)
+as_colpair_mapper(f, eval_f = TRUE, ...)
 }
 \arguments{
 \item{f}{A function.}
@@ -12,6 +12,8 @@ as_colpair_mapper(f, eval_f = TRUE)
 \item{eval_f}{Boolean. If set to \code{FALSE}, \code{f} will appear in the output
 function by name rather than as its body and arguments. Default is \code{TRUE}.
 See details.}
+
+\item{...}{These dots must be empty.}
 }
 \value{
 A function. See \code{vary()} and \code{covary()} for examples of functions

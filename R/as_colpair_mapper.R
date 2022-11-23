@@ -8,6 +8,7 @@
 #' @param eval_f Boolean. If set to `FALSE`, `f` will appear in the output
 #'   function by name rather than as its body and arguments. Default is `TRUE`.
 #'   See details.
+#' @param ... These dots must be empty.
 #'
 #' @return A function. See `vary()` and `covary()` for examples of functions
 #'   made by `as_colpair_mapper()`.
@@ -59,7 +60,14 @@
 #' # and then calls that new function on `mtcars`.)
 
 
-as_colpair_mapper <- function(f, eval_f = TRUE) {
+as_colpair_mapper <- function(f, eval_f = TRUE, ...) {
+  # The dots have no intrinsic meaning here. Their only purpose is to prevent a
+  # CRAN warning. Because they shouldn't be relied upon, the must not be used:
+  dots <- rlang::enexprs(...)
+  if (length(dots) != 0L) {
+    rlang::abort("The dots, `...`, must be empty.")
+  }
+  rm(dots)
   # Capture the name of `f` and, by default, make sure to evaluate `f` itself:
   f_value <- substitute(f)
   f_name <- deparse(f_value)

@@ -23,5 +23,7 @@ Suggests:
     knitr,
     purrr,
     rlang,
-    rmarkdown
+    rmarkdown,
+    stats,
+    testthat
 VignetteBuilder: knitr

@@ -18,9 +18,6 @@ knitr::opts_chunk$set(
 ```{r include=FALSE}
 # Dev only: Load pairmaps from within pairmaps
 devtools::load_all(".")
-
-# To suppress a conflict message from `library(purrr)` below:
-devtools::unload("testthat")
 ```
 
 ```{r eval=FALSE, include=FALSE}
@@ -38,9 +35,7 @@ I tend to prefer "function factory" because it's more formal than "adverb" but a
 Yet "adverb" is an elegant metaphor that smoothly conveys these functions' usage. Consider this example from purrr:
 
 ```{r}
-library(purrr)
-
-safe_log <- safely(log)
+safe_log <- purrr::safely(log)
 safe_log(10)
 ```
 
@@ -51,7 +46,7 @@ Somebody who is familiar with `log()` but not with function factories will more 
 Accessible explanations are needed even more acutely if we rewrite the example:
 
 ```{r}
-safely(log)(10)
+purrr::safely(log)(10)
 ```
 
 This syntax --- two sets of parentheses, seemingly following the same function --- will puzzle anybody who encounters it for the first time. What goes on here is easier to explain by saying that `safely()` is an adverb that changes they way `log()` works. Note that the output is the same as before, so the two notations are equivalent.
