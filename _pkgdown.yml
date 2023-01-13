@@ -20,6 +20,14 @@ template:
     navbar-dark-active-color: "#f9ea6b"
 
 
+articles:
+- title: ~
+  navbar: ~
+  contents:
+  - using-pairmaps
+  - factory-labels
+
+
 reference:
 
 - title: Function factory
