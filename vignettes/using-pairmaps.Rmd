@@ -134,4 +134,4 @@ is_pairmaps_df(iris)
 
 *(Here is an extra section. Its display is suppressed via the CSS element `display: none;` because its only purpose is to generate the citation @wickham2019 --- I want to style the citation in the text above more flexibly than the format allows (including a URL) but still get the reference pasted at the bottom.)*
 
-# References
+## References
