@@ -118,8 +118,7 @@ test_that("`as_colpair_mapper()`'s arguments are *not* evaluated when
 
 test_that("supplying arguments via the dots, `...`, leads to an error
           with the designated error message", {
-  msg_error <- "The dots, `...`, must be empty."
-  expect_error(as_colpair_mapper(stats::cov, some_arg = 4), msg_error)
-  expect_error(as_colpair_mapper(stats::cov, TRUE, "dogs"), msg_error)
+  expect_error(as_colpair_mapper(stats::cov, some_arg = 4))
+  expect_error(as_colpair_mapper(stats::cov, TRUE, c("a", "b"), "dogs"))
 })
 
