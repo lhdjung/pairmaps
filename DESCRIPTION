@@ -18,6 +18,7 @@ Collate:
     'global.R'
     'vary-covary.R'
 Suggests: 
+    cli,
     corrr,
     devtools,
     knitr,

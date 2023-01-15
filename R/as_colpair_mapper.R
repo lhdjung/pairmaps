@@ -11,8 +11,9 @@
 #' @param class Boolean. If `TRUE` (the default), the data frames returned by
 #'   the output function will inherit a class that starts on `"pairmaps_df_"`,
 #'   followed by the name of `f`.
-#' @param arg_defaults List with defaults for the output function's `.diagonal`
-#'   and `.quiet` arguments. Default is `list(.diagonal = NA, .quiet = FALSE)`.
+#' @param default_diagonal,default_quiet Defaults for the `.diagonal` and
+#'   `.quiet` arguments of the output function. By default of the *present*
+#'   function, these will be `NA` and `FALSE`, respectively.
 #' @param ... These dots must be empty.
 #'
 #' @return A function. See `vary()` and `covary()` for examples of functions
@@ -24,15 +25,15 @@
 #'   function definition *within* your new function definition, and manually
 #'   updating it when the mapped function changes.
 #'
-#'   However, this should only be considered if the reference point of `f` is
-#'   completely unambiguous, because such ambiguity might lead to a very subtle
-#'   bug. See `vignette("using-pairmaps")`, section *Assignment and copying*.
+#'   However, this should only be considered if the value of `f` is completely
+#'   unambiguous, because such ambiguity might lead to a very subtle bug. See
+#'   `vignette("using-pairmaps")`, section *Assignment and copying*.
 
 #' @seealso
 #' - This function is based on `corrr::colpair_map()`. For comparisons between
 #' them, see `vignette("using-pairmaps")`.
-#' - For more general information on functions like `as_colpair_mapper()`, see
-#' `vignette("factory-labels")`.
+#' - For more information on function factories like `as_colpair_mapper()`, see
+#' Wickham (2019), ch. 10-11, and `vignette("factory-labels")`.
 
 #' @export
 #'
@@ -49,17 +50,22 @@
 #' # Derive a new mapping function:
 #' p_value_map <- as_colpair_mapper(f = calc_p_value)
 #'
-#' # These calls are almost equivalent. In the second
-#' # and third cases, the output tibble inherits an extra
-#' # class that includes the name of `f`. Here, it is
+#' # Below are three near-equivalent calls.
+#' # The only difference: In the first two cases,
+#' # the output tibble inherits an extra class
+#' # that includes the name of `f`. Here, it is
 #' # `"pairmaps_df_calc_p_value"`.
-#' corrr::colpair_map(.data = mtcars, .f = calc_p_value)
 #'
+#' # 1. Using a ready-made mapping function:
 #' p_value_map(.data = mtcars)
 #'
+#' # 2. Directly working with the factory:
 #' as_colpair_mapper(f = calc_p_value)(.data = mtcars)
 #'
-#' # (In the third case, R first evaluates
+#' # 3. Calling the underlying function:
+#' corrr::colpair_map(.data = mtcars, .f = calc_p_value)
+#'
+#' # (In the second call, R first evaluates
 #' # `as_colpair_mapper(f = calc_p_value)` to a
 #' # mapping function just like `p_value_map()`,
 #' # and then calls that new function on `mtcars`.)
@@ -113,9 +119,11 @@ as_colpair_mapper <- function(f, eval_f = TRUE, class = TRUE,
         ..., .diagonal = .diagonal
       )
       if (!.quiet) {
-        rlang::inform(c(
-          "i" = paste0("Applying `", f_name, "()` to each column pair")
-        ))
+        cli::cli_inform(c("i" = cli::col_none(
+          "Applying ",
+          cli::col_blue(paste0("`", f_name), "()`"),
+          " to each column pair"
+        )))
       }
       `!!`(class_expr)
       out
