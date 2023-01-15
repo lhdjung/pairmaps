@@ -22,6 +22,8 @@
 #'
 #' @include as_colpair_mapper.R
 #'
+#' @name vary-covary
+#'
 #' @export
 #'
 #' @seealso `vary()` wraps `stats::var()`, `covary()` wraps `stats::cov()`. For
