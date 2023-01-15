@@ -48,6 +48,27 @@ Running your data through `colpair_map()` --- directly or via a wrapper function
 
 This enables you to plug your analysis into any R workflow focused on data frames, but especially the corrr package's arsenal of exploratory functions. Read about them in the [*Using corrr* vignette](https://corrr.tidymodels.org/articles/using-corrr.html).
 
+## Defaults for defaults
+
+You can control which defaults the `.diagonal` and `.quiet` arguments of the output function will have by specifying the `default_diagonal` and `default_quiet` arguments of `as_colpair_mapper()`:
+
+```{r}
+max_sum_map <- as_colpair_mapper(
+  f = max_sum, default_diagonal = 1, default_quiet = TRUE
+)
+
+# The diagonal is `1`, and no message is displayed!
+max_sum_map(mtcars)
+```
+
+The defaults *for these defaults* within `as_colpair_mapper()`, in turn, are equivalent to this:
+
+```{r}
+max_sum_map <- as_colpair_mapper(
+  f = max_sum, default_diagonal = NA, default_quiet = FALSE
+)
+```
+
 ## Assignment and copying
 
 ### Not evaluating too early
