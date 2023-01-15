@@ -5,9 +5,7 @@
 #'   frames instead of matrices, making them easier to explore with the [corrr
 #'   package](https://corrr.tidymodels.org/articles/using-corrr.html).
 #'
-#'   `vary()` wraps `stats::var()`, `covary()` wraps `stats::cov()`.
-#'
-#' @param .data Matrix, data frame, or numeric vector.
+#' @param .data Numeric vector, matrix or data frame.
 #' @param ... Further arguments passed on to `var()` or `cov()`, respectively.
 #' @param .diagonal Value to which the diagonal will be set. Default is `NA`.
 #' @param .quiet Boolean. Set it to `TRUE` to suppress the message about
@@ -25,6 +23,9 @@
 #' @include as_colpair_mapper.R
 #'
 #' @export
+#'
+#' @seealso `vary()` wraps `stats::var()`, `covary()` wraps `stats::cov()`. For
+#'   the analogous `stats::cor()` wrapper, see `corrr::correlate()`.
 #'
 #' @examples
 #' vary(mtcars)
