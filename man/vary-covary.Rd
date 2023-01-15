@@ -10,7 +10,7 @@ vary(.data, ..., .diagonal = NA, .quiet = FALSE)
 covary(.data, ..., .diagonal = NA, .quiet = FALSE)
 }
 \arguments{
-\item{.data}{Matrix, data frame, or numeric vector.}
+\item{.data}{Numeric vector, matrix or data frame.}
 
 \item{...}{Further arguments passed on to \code{var()} or \code{cov()}, respectively.}
 
@@ -27,8 +27,6 @@ reflects the origins of the \code{cor_df} class in the corrr package.
 \description{
 \code{vary()} and \code{covary()} return variance and covariance data
 frames instead of matrices, making them easier to explore with the \href{https://corrr.tidymodels.org/articles/using-corrr.html}{corrr package}.
-
-\code{vary()} wraps \code{stats::var()}, \code{covary()} wraps \code{stats::cov()}.
 }
 \examples{
 vary(mtcars)
@@ -38,4 +36,7 @@ covary(mtcars)
 \seealso{
 \code{as_colpair_mapper()}, which made these functions via
 \code{corrr::colpair_map()}.
+
+\code{vary()} wraps \code{stats::var()}, \code{covary()} wraps \code{stats::cov()}. For
+the analogous \code{stats::cor()} wrapper, see \code{corrr::correlate()}.
 }

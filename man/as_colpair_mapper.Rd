@@ -7,9 +7,9 @@
 as_colpair_mapper(
   f,
   eval_f = TRUE,
-  check_cols = NULL,
   class = TRUE,
-  arg_defaults = NULL,
+  default_diagonal = NA,
+  default_quiet = FALSE,
   ...
 )
 }
@@ -23,6 +23,10 @@ See details.}
 \item{class}{Boolean. If \code{TRUE} (the default), the data frames returned by
 the output function will inherit a class that starts on \code{"pairmaps_df_"},
 followed by the name of \code{f}.}
+
+\item{default_diagonal, default_quiet}{Defaults for the \code{.diagonal} and
+\code{.quiet} arguments of the output function. By default of the \emph{present}
+function, these will be \code{NA} and \code{FALSE}, respectively.}
 
 \item{...}{These dots must be empty.}
 }
@@ -41,9 +45,9 @@ one particular function by name, rather than copying and pasting a lengthy
 function definition \emph{within} your new function definition, and manually
 updating it when the mapped function changes.
 
-However, this should only be considered if the reference point of \code{f} is
-completely unambiguous, because such ambiguity might lead to a very subtle
-bug. See \code{vignette("using-pairmaps")}, section \emph{Assignment and copying}.
+However, this should only be considered if the value of \code{f} is completely
+unambiguous, because such ambiguity might lead to a very subtle bug. See
+\code{vignette("using-pairmaps")}, section \emph{Assignment and copying}.
 }
 \examples{
 # From `?corrr::colpair_map()` -- a function that
@@ -55,17 +59,22 @@ calc_p_value <- function(vec_a, vec_b) {
 # Derive a new mapping function:
 p_value_map <- as_colpair_mapper(f = calc_p_value)
 
-# These calls are almost equivalent. In the second
-# and third cases, the output tibble inherits an extra
-# class that includes the name of `f`. Here, it is
+# Below are three near-equivalent calls.
+# The only difference: In the first two cases,
+# the output tibble inherits an extra class
+# that includes the name of `f`. Here, it is
 # `"pairmaps_df_calc_p_value"`.
-corrr::colpair_map(.data = mtcars, .f = calc_p_value)
 
+# 1. Using a ready-made mapping function:
 p_value_map(.data = mtcars)
 
+# 2. Directly working with the factory:
 as_colpair_mapper(f = calc_p_value)(.data = mtcars)
 
-# (In the third case, R first evaluates
+# 3. Calling the underlying function:
+corrr::colpair_map(.data = mtcars, .f = calc_p_value)
+
+# (In the second call, R first evaluates
 # `as_colpair_mapper(f = calc_p_value)` to a
 # mapping function just like `p_value_map()`,
 # and then calls that new function on `mtcars`.)
@@ -78,7 +87,7 @@ Press/Taylor and Francis Group. https://adv-r.hadley.nz/index.html.
 \itemize{
 \item This function is based on \code{corrr::colpair_map()}. For comparisons between
 them, see \code{vignette("using-pairmaps")}.
-\item For more general information on functions like \code{as_colpair_mapper()}, see
-\code{vignette("factory-labels")}.
+\item For more information on function factories like \code{as_colpair_mapper()}, see
+Wickham (2019), ch. 10-11, and \code{vignette("factory-labels")}.
 }
 }
