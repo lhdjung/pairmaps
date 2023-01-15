@@ -37,6 +37,4 @@ devtools::install_github("lhdjung/pairmaps")
 
 ## Get started
 
-``` r
-library(pairmaps)
-```
+Go to `vignette("using-pairmaps")`.
