@@ -80,12 +80,6 @@ as_colpair_mapper <- function(f, eval_f = TRUE, class = TRUE,
   # dots. They shouldn't be relied upon here, so they must not be used:
   rlang::check_dots_empty()
 
-  # # If specified, `arg_defaults` must be a named list because it will be the new
-  # # defaults for `.diagonal` and `.quiet`:
-  # check_arg_defaults(arg_defaults)
-
-  # TO DO: IMPLEMENT `arg_defaults` --> OUTPUT FUNCTION'S DEFAULTS
-
   # Capture the name of `f` and, by default, make sure to evaluate `f` itself:
   f_value <- substitute(f)
   f_name <- deparse(f_value)
@@ -101,9 +95,6 @@ as_colpair_mapper <- function(f, eval_f = TRUE, class = TRUE,
   } else {
     class_expr <- NULL
   }
-
-  # .diagonal <- arg_defaults$.diagonal
-  # .quiet <- arg_defaults$.quiet
 
   # Construct the new `corrr::colpair_map()` wrapper from its three components
   # (see Hadley Wickham, *Advanced R*, ch. 6.2.1;
@@ -148,54 +139,3 @@ as_colpair_mapper <- function(f, eval_f = TRUE, class = TRUE,
   out
 }
 
-
-
-
-
-# Old ideas ---------------------------------------------------------------
-
-# # READ ON HERE: https://adv-r.hadley.nz/expressions.html#parsing
-# # This was meant for the exit area:
-# if (!is.null(check_cols)) {
-#   body(out) <- as.call(c(
-#     body(out)[[1]],
-#     expression(.data <- dplyr::select(.data, where(check_cols))),
-#     body(out)[[2:length(body(out))]]
-#   ))
-# }
-
-# # Enable reordering of `f`'s list of arguments, so that users of
-# # `as_colpair_mapper()` can freely choose which two arguments of `f` will
-# # eventually be applied to each pair of columns:
-# if (!is.null(apply_args)) {
-#   # Checks to validate `apply_args`:
-#   if (!is.character(apply_args)) {
-#     rlang::abort("`apply_args` must be a string vector (of length 2).")
-#   }
-#   if (length(apply_args) != 2L) {
-#     rlang::abort("`apply_args` must have length 2.")
-#   }
-#   formal_names <- names(formals(f))
-#   if (!all(apply_args %in% formal_names)) {
-#     msg1 <- "`apply_args` must be the names of two arguments of `f`."
-#     msg2 <- paste0("`f` is `", f_name, "()` here.")
-#     rlang::abort(c(msg1, msg2))
-#   }
-#   formals_to_use <- formals(f)
-#   formals(f)[1:2] <- list(as.symbol(apply_args[1]), as.symbol(apply_args[2]))
-#
-#   # TO DO: INSERT CHECK INTO THE BODY OF `f` SO THAT IT THROWS AN ERROR IF
-#   # EITHER OF THE FIRST TWO ARGUMENTS (OR THOSE THAT WOULD NORMALLY BE
-#   # APPLIED; MAYBE WORK ON THIS, TOO) IS SPECIFIED
-#
-#   # rlang::call_match(call = quote(f()), fn = f, defaults = TRUE)
-# }
-
-#   formal_was_chosen <- formal_names %in% apply_args
-#   chosen_args <- formals(f)[formal_was_chosen]
-#   formals(f) <- formals(f)[!formal_was_chosen]
-#   formals(f) <- c(chosen_args, formals(f))
-#   rm(formal_names)
-#   rm(formal_was_chosen)
-#   rm(chosen_args)
-# }
