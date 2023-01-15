@@ -24,6 +24,8 @@ Functions like `as_colpair_mapper()` are sometimes called "adverbs" because they
 
 A more technical term is *function operator*, a special kind of *function factory*. The latter refers to any function that returns a function. In this way, function operators are simply function factories that take one or more functions as input (Wickham 2019, [ch. 10-11](https://adv-r.hadley.nz/function-factories.html)).
 
+### Balancing pros and cons
+
 I tend to prefer "function factory" because it's more formal than "adverb" but also highly evocative. It's used in the context of other languages as well, such as Python and Javascript. The term is less precise than "function operator", but I think this won't do much harm. Although function operators may not have the same use cases as other factories, the differences are not too significant during development. This is also true when working with the [factory package](https://github.com/jonthegeek/factory), a great tool for writing new function factories.
 
 Yet "adverb" is an elegant metaphor that smoothly conveys these functions' usage. Consider this example from purrr:
@@ -46,6 +48,8 @@ purrr::safely(log)(10)
 This syntax --- two sets of parentheses, seemingly following the same function --- will puzzle anybody who encounters it for the first time. What goes on here is easier to explain by saying that `safely()` is an adverb that changes they way `log()` works. Note that the output is the same as before, so the two notations are equivalent.
 
 Referring to such functions as "adverbs", however, is not very precise. R objects usually can't be modified in place (Wickham 2019, [ch. 2.3](https://adv-r.hadley.nz/names-values.html#copy-on-modify)), and adverbs don't actually change their input functions. Instead, they create and return entirely new functions that apply the input ones in some particular way. The sheer complexity of all this means that speaking of adverbs and modification will often be reasonable, especially when the focus is on *using* function factories, not writing them.
+
+### Conclusion
 
 All things considered, it seems wise of the developer community to speak of adverbs in user-facing contexts and of function factories / operators in developer-facing contexts. Both sources linked above that reference adverbs are documentation pages for existing functions. By contrast, chapters 10-11 of *Advanced R* (Wickham 2019) are directed at more experienced R programmers who might want to write function factories themselves. The same applies to the [factory package's readme](https://github.com/jonthegeek/factory). This audience will need a deeper understanding of the way such functions work, and the concept of "function factories" will bring them into sharper view.
 
