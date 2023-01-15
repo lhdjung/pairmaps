@@ -99,7 +99,7 @@ as_colpair_mapper <- function(f, eval_f = TRUE, class = TRUE,
   # Construct the new `corrr::colpair_map()` wrapper from its three components
   # (see Hadley Wickham, *Advanced R*, ch. 6.2.1;
   # https://adv-r.hadley.nz/functions.html#fun-components):
-  out <- rlang::new_function(
+  f_out <- rlang::new_function(
     # 1. List of arguments
     args = as.pairlist(alist(.data = , ... = )),
     # 2. Body code
@@ -129,13 +129,13 @@ as_colpair_mapper <- function(f, eval_f = TRUE, class = TRUE,
   # Remove the `class_expr` placeholder from the function body if the user chose
   # not to make the output function attach a signature class to its data frames:
   if (!class) {
-    body(out)[[length(body(out)) - 1]] <- NULL
+    body(f_out)[[length(body(f_out)) - 1]] <- NULL
   }
 
-  formals(out) <- append(
-    formals(out), list(.diagonal = default_diagonal, .quiet = default_quiet)
+  formals(f_out) <- append(
+    formals(f_out), list(.diagonal = default_diagonal, .quiet = default_quiet)
   )
 
-  out
+  f_out
 }
 
