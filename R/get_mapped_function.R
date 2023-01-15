@@ -4,11 +4,11 @@ unclass_pairmaps <- function(pairmaps_df) {
   df_classes <- class(pairmaps_df)[grepl("^pairmaps_df_", class(pairmaps_df))]
   if (length(df_classes) != 1L) {
     if (length(df_classes) == 0L) {
-      rlang::abort("No \"pairmaps_df_*\" classes present.")
+      cli::cli_abort(c("x" = "No \"pairmaps_df_*\" classes present."))
     }
     msg_warning <- paste(length(df_classes), "\"pairmaps_df_*\" classes")
     msg_warning <- paste(msg_warning, "present. It should only be 1.")
-    rlang::warn(msg_warning)
+    cli::cli_warn(msg_warning)
   }
   class(pairmaps_df) <- class(pairmaps_df)[!class(pairmaps_df) == df_classes]
   pairmaps_df
@@ -58,14 +58,11 @@ get_mapped_function <- function(data) {
 get_mapped_function_name <- function(data) {
   # Check that `data` has exactly one class that starts on `pairmaps_df_`:
   if (!is_pairmaps_df(data)) {
-    msg1 <- "It doesn't seem to be the output of a function"
-    msg1 <- paste(msg1, "created by `as_colpair_mapper()`.")
-    msg2 <- "Else, it is but its \"pairmaps_df_*\" class"
-    msg2 <- paste(msg2, "was changed, removed, or supplemented by another one.")
-    rlang::abort(c(
-      "Invalid `data` argument.",
-      "x" = msg1,
-      "x" = msg2
+    cli::cli_abort(c(
+      "`data` must be the output of a function \\
+      created by `as_colpair_mapper()`.",
+      "x" = "Either it isn't or its \"pairmaps_df_*\" class \\
+      was changed, removed, or supplemented by another one."
     ))
   }
   # Subset this class and remove the `pairmaps_df_` prefix. The substring left
