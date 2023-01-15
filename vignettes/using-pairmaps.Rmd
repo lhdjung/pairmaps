@@ -28,7 +28,7 @@ library(corrr)
 library(pairmaps)
 ```
 
-## Basics
+### Basics
 
 The main function of the package is `as_colpair_mapper()`, which creates wrapper functions around `corrr::colpair_map()`. Each wrapper is bound to one specific other function which it applies to a data frame. For example:
 
@@ -42,13 +42,15 @@ max_sum_map(mtcars)
 
 Use `as_colpair_mapper()` if you plan to reuse the resulting function, like `max_sum_map()`, multiple times. A new wrapper function would add little value if you only want to use it once. In this case, directly calling `corrr::colpair_map()` might be the better option.
 
-## More with corrr
+`vary()` and `covary()` are built-in examples for useful functions made by `as_colpair_mapper()`.
+
+### More with corrr
 
 Running your data through `colpair_map()` --- directly or via a wrapper function made by `as_colpair_mapper()` --- will always return a `cor_df` tibble. `cor_df` is the same format as a data frame of correlations returned by `corrr::correlate()`, but it's not limited to computing correlations. Instead, `colpair_map()` arranges its results in this special format after applying any user-specified function which has at least two arguments.
 
 This enables you to plug your analysis into any R workflow focused on data frames, but especially the corrr package's arsenal of exploratory functions. Read about them in the [*Using corrr* vignette](https://corrr.tidymodels.org/articles/using-corrr.html).
 
-## Defaults for defaults
+### Defaults for defaults
 
 You can control which defaults the `.diagonal` and `.quiet` arguments of the output function will have by specifying the `default_diagonal` and `default_quiet` arguments of `as_colpair_mapper()`:
 
@@ -61,7 +63,7 @@ max_sum_map <- as_colpair_mapper(
 max_sum_map(mtcars)
 ```
 
-The defaults *for these defaults* within `as_colpair_mapper()`, in turn, are equivalent to this:
+The defaults *for these defaults* within `as_colpair_mapper()`, in turn, correspond to this:
 
 ```{r}
 max_sum_map <- as_colpair_mapper(
@@ -69,9 +71,9 @@ max_sum_map <- as_colpair_mapper(
 )
 ```
 
-## Assignment and copying
+### Assignment and copying
 
-### Not evaluating too early
+#### Not evaluating too early
 
 `as_colpair_mapper()` has one more argument, the Boolean `eval_f`. If you set it to `FALSE`, the input function will only appear within the output function by name. Look at `.f = max_sum` here:
 
@@ -89,7 +91,7 @@ You can imagine that this might be confusing with longer functions than `max_sum
 
 If you aren't developing a package but copying the output of `as_colpair_mapper()` into some other script, you will have to manually update it anyways if you run `as_colpair_mapper()` with `eval_f = TRUE`.
 
-### Not evaluating too late
+#### Not evaluating too late
 
 The purpose of the default `eval_f = TRUE` is to prevent the reverse problem. If you don't copy and paste the output function but assign it to a variable straight away, you might run into a subtle issue with lazy evaluation (Wickham 2019, [ch. 10.2.3](https://adv-r.hadley.nz/function-factories.html#forcing-evaluation)):
 
@@ -107,22 +109,24 @@ max_sum <- function(...) {
 max_sum_map(mtcars)
 ```
 
-What happens here? The `f = max_sum` argument is only evaluated when the output function, `max_sum_map()`, is eventually called. Before it is, however, the value of `max_sum()` changes to a different function, which is then applied in place of the original `max_sum()`.
+What happened here? The `f = max_sum` argument was only evaluated when the output function, `max_sum_map()`, was ultimately called. Before it was, however, the value of `max_sum()` changed to a different function, which was then applied in place of the original `max_sum()`.
 
 I made the point very apparent because the new `max_sum()` function returns a constant output when the tibble should include many different values. In more realistic cases, the problem might be harder to spot, and it would be safer to evaluate `f` to the original value of `max_sum()` right when `as_colpair_mapper()` creates `max_sum_map()`. The default `eval_f = TRUE` provides this safety.
 
-If the new value can't be interpreted as one or more functions, the bug doesn't occur but an error is thrown:
+If the new value can't be interpreted as a function, the bug doesn't occur but an error is thrown:
 
 ```{r, error=TRUE}
 max_sum <- function(x, y) {
   max(sum(x), sum(y))
 }
 max_sum_map <- as_colpair_mapper(f = max_sum, eval_f = FALSE)
+
+# This new `max_sum` is numeric, not a function:
 max_sum <- max(sum(iris$Petal.Length, iris$Petal.Width))
 max_sum_map(mtcars)
 ```
 
-## Retrieving the mapped function
+### Retrieving the mapped function
 
 In case you have a pairmaps data frame but you aren't sure which function was applied to the column pairs, you can call `get_mapped_function()` with that data frame. Note that it will return the function as it is defined the moment you call `get_mapped_function()`. This means you can't use it to retrieve any earlier functions by the same name.
 
