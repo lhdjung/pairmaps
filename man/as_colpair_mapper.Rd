@@ -4,7 +4,14 @@
 \alias{as_colpair_mapper}
 \title{Adverb for new column-pair mapping functions}
 \usage{
-as_colpair_mapper(f, eval_f = TRUE, ...)
+as_colpair_mapper(
+  f,
+  eval_f = TRUE,
+  check_cols = NULL,
+  class = TRUE,
+  arg_defaults = NULL,
+  ...
+)
 }
 \arguments{
 \item{f}{A function.}
@@ -12,6 +19,10 @@ as_colpair_mapper(f, eval_f = TRUE, ...)
 \item{eval_f}{Boolean. If set to \code{FALSE}, \code{f} will appear in the output
 function by name rather than as its body and arguments. Default is \code{TRUE}.
 See details.}
+
+\item{class}{Boolean. If \code{TRUE} (the default), the data frames returned by
+the output function will inherit a class that starts on \code{"pairmaps_df_"},
+followed by the name of \code{f}.}
 
 \item{...}{These dots must be empty.}
 }
