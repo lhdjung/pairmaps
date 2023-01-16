@@ -30,8 +30,7 @@ You can install the development version of pairmaps from
 [GitHub](https://github.com/) with:
 
 ``` r
-# install.packages("devtools")
-devtools::install_github("lhdjung/pairmaps")
+remotes::install_github("lhdjung/pairmaps")
 ```
 
 ## Get started

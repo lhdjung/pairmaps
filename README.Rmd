@@ -37,8 +37,7 @@ pairmaps is an unofficial add-on to [corrr](https://corrr.tidymodels.org/). It d
 You can install the development version of pairmaps from [GitHub](https://github.com/) with:
 
 ``` r
-# install.packages("devtools")
-devtools::install_github("lhdjung/pairmaps")
+remotes::install_github("lhdjung/pairmaps")
 ```
 
 ## Get started
