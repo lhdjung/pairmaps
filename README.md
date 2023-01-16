@@ -17,9 +17,8 @@ function so that it is applied to each pair of columns in a data frame.
 Every function created this way is a wrapper around
 `corrr::colpair_map()`.
 
-Package developers can avoid pairmaps as a dependency by copying and
-pasting the functions returned by `as_colpair_mapper()` into their own
-source code.
+You can avoid pairmaps as a dependency by copying and pasting the
+functions returned by `as_colpair_mapper()` into your source code.
 
 pairmaps is an unofficial add-on to
 [corrr](https://corrr.tidymodels.org/). It doesn’t have any dependencies
@@ -38,3 +37,8 @@ devtools::install_github("lhdjung/pairmaps")
 ## Get started
 
 Go to `vignette("using-pairmaps")`.
+
+## Acknowledgements
+
+pairmaps was inspired by
+[factory](https://github.com/jonthegeek/factory).
