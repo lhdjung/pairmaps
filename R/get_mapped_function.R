@@ -4,13 +4,13 @@ unclass_pairmaps <- function(pairmaps_df) {
   df_classes <- class(pairmaps_df)[grepl("^pairmaps_df_", class(pairmaps_df))]
   if (length(df_classes) != 1L) {
     if (length(df_classes) == 0L) {
-      cli::cli_abort(c("x" = "No \"pairmaps_df_*\" classes present."))
+      rlang::abort("Input must inherit a \"pairmaps_df_*\" class.")
     }
     msg_warning <- paste(length(df_classes), "\"pairmaps_df_*\" classes")
-    msg_warning <- paste(msg_warning, "present. It should only be 1.")
-    cli::cli_warn(msg_warning)
+    msg_warning <- paste(msg_warning, "present. There should only be 1.")
+    rlang::warn(msg_warning)
   }
-  class(pairmaps_df) <- class(pairmaps_df)[!class(pairmaps_df) == df_classes]
+  class(pairmaps_df) <- class(pairmaps_df)[!class(pairmaps_df) %in% df_classes]
   pairmaps_df
 }
 
@@ -58,11 +58,19 @@ get_mapped_function <- function(data) {
 get_mapped_function_name <- function(data) {
   # Check that `data` has exactly one class that starts on `pairmaps_df_`:
   if (!is_pairmaps_df(data)) {
-    cli::cli_abort(c(
-      "`data` must be the output of a function \\
-      created by `as_colpair_mapper()`.",
-      "x" = "Either it isn't or its \"pairmaps_df_*\" class \\
-      was changed, removed, or supplemented by another one."
+    classes <- class(data)
+    classes <- classes[grepl("^pairmaps_df_", classes)]
+    msg_classes <- "Either it isn't or its \"pairmaps_df_*\" class was"
+    if (length(classes) == 0L) {
+      msg_classes <- c("x" = "Either it isn't or its \"pairmaps_df_*\" class was changed or removed.")
+    } else {
+      msg_classes <- c("x" = paste0("It has ", length(classes), " \"pairmaps_df_*\" classes."))
+      msg_classes <- c(msg_classes, "x" = "It should only have 1.")
+    }
+    rlang::abort(c(
+      "`data` must be the output of column pair mapper.",
+      "!" = "Those functions were created by `as_colpair_mapper()`.",
+      msg_classes
     ))
   }
   # Subset this class and remove the `pairmaps_df_` prefix. The substring left

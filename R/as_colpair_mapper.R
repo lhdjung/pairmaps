@@ -113,11 +113,9 @@ as_colpair_mapper <- function(f, eval_f = TRUE, class = TRUE,
         ..., .diagonal = .diagonal
       )
       if (!.quiet) {
-        cli::cli_inform(c("i" = paste(
-          "Applying",
-          cli::col_red(paste0("`", f_name), "()`"),
-          "to each column pair"
-        )))
+        rlang::inform(c(
+          "i" = paste0("Applying `", f_name, "()` to each column pair")
+        ))
       }
       `!!`(class_expr)
       out
