@@ -115,7 +115,7 @@ as_colpair_mapper <- function(f, eval_f = TRUE, class = TRUE,
       if (!.quiet) {
         cli::cli_inform(c("i" = paste(
           "Applying",
-          cli::col_blue(paste0("`", f_name), "()`"),
+          cli::col_red(paste0("`", f_name), "()`"),
           "to each column pair"
         )))
       }
