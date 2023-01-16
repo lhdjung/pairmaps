@@ -32,6 +32,7 @@
 #' @seealso
 #' - This function is based on `corrr::colpair_map()`. For comparisons between
 #' them, see `vignette("using-pairmaps")`.
+#' - The function factory is constructed using `rlang::new_function()`.
 #' - For more information on function factories like `as_colpair_mapper()`, see
 #' Wickham (2019), ch. 10-11, and `vignette("factory-labels")`.
 
@@ -101,7 +102,9 @@ as_colpair_mapper <- function(f, eval_f = TRUE, class = TRUE,
   # https://adv-r.hadley.nz/functions.html#fun-components):
   f_out <- rlang::new_function(
     # 1. List of arguments
-    args = as.pairlist(alist(.data = , ... = )),
+    args = rlang::pairlist2(
+      .data = , ... = , .diagonal = default_diagonal, .quiet = default_quiet
+    ),
     # 2. Body code
     body = rlang::expr({
       f_name <- `!!`(f_name)
@@ -131,10 +134,6 @@ as_colpair_mapper <- function(f, eval_f = TRUE, class = TRUE,
   if (!class) {
     body(f_out)[[length(body(f_out)) - 1]] <- NULL
   }
-
-  formals(f_out) <- append(
-    formals(f_out), list(.diagonal = default_diagonal, .quiet = default_quiet)
-  )
 
   f_out
 }
