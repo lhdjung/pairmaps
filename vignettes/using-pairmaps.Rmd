@@ -18,19 +18,19 @@ knitr::opts_chunk$set(
 ```{r include=FALSE}
 # Dev only: Load pairmaps from within pairmaps
 devtools::load_all(".")
-library(corrr)
 ```
 
 This vignette shows you when and how to use pairmaps.
 
 ```{r setup, eval=FALSE}
-library(corrr)
 library(pairmaps)
 ```
 
 ### Basics
 
-The main function of the package is `as_colpair_mapper()`, which creates wrapper functions around `corrr::colpair_map()`. Each wrapper is bound to one specific other function which it applies to a data frame. For example:
+The main function of pairmaps is the adverb `as_colpair_mapper()`. It modifies a given function --- or "verb" --- so that it operates on each pair of columns in a data frame.
+
+More precisely, `as_colpair_mapper()` creates wrapper functions around `corrr::colpair_map()`. Each wrapper is bound to one specific other function and applies it to a data frame. For example:
 
 ```{r}
 max_sum <- function(x, y) {
@@ -75,7 +75,7 @@ max_sum_map <- as_colpair_mapper(
 
 #### Not evaluating too early
 
-`as_colpair_mapper()` has one more argument, the Boolean `eval_f`. If you set it to `FALSE`, the input function will only appear within the output function by name. Look at `.f = max_sum` here:
+`as_colpair_mapper()` has one more argument, the Boolean `eval_f`. If you set it to `FALSE`, the input function will appear within the output function by name only. Look at `.f = max_sum` here:
 
 ```{r}
 as_colpair_mapper(f = max_sum, eval_f = FALSE)
@@ -93,7 +93,7 @@ If you aren't developing a package but copying the output of `as_colpair_mapper(
 
 #### Not evaluating too late
 
-The purpose of the default `eval_f = TRUE` is to prevent the reverse problem. If you don't copy and paste the output function but assign it to a variable straight away, you might run into a subtle issue with lazy evaluation (Wickham 2019, [ch. 10.2.3](https://adv-r.hadley.nz/function-factories.html#forcing-evaluation)):
+The purpose of the default `eval_f = TRUE` is to prevent the reverse problem. If you don't copy and paste the output function but assign it to a variable straight away, setting `eval_f` to `FALSE` might lead to a subtle issue with lazy evaluation (Wickham 2019, [ch. 10.2.3](https://adv-r.hadley.nz/function-factories.html#forcing-evaluation)):
 
 ```{r}
 max_sum <- function(x, y) {
@@ -140,7 +140,7 @@ df <- max_sum_map(mtcars)
 get_mapped_function(df)
 ```
 
-If all you need is the name of the mapped function, call `get_mapped_function_name()` instead:
+If you need the name of the mapped function, call `get_mapped_function_name()` instead:
 
 ```{r}
 get_mapped_function_name(df)
