@@ -27,5 +27,6 @@ Suggests:
     stats,
     testthat
 VignetteBuilder: knitr
-URL: https://github.com/lhdjung/pairmaps
+URL: https://github.com/lhdjung/pairmaps,
+    https://lhdjung.github.io/pairmaps/
 BugReports: https://github.com/lhdjung/pairmaps/issues
