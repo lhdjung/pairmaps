@@ -32,9 +32,10 @@
 #' @seealso
 #' - This function is based on `corrr::colpair_map()`. For comparisons between
 #' them, see `vignette("using-pairmaps")`.
-#' - The function factory is constructed using `rlang::new_function()`.
-#' - For more information on function factories like `as_colpair_mapper()`, see
-#' Wickham (2019), ch. 10-11, and `vignette("factory-labels")`.
+#' - The output function is constructed using `rlang::new_function()`.
+#' - For more information on adverbs / function factories like
+#' `as_colpair_mapper()`, see Wickham (2019), ch. 10-11, and
+#' `vignette("factory-labels")`.
 
 #' @export
 #'
@@ -60,7 +61,7 @@
 #' # 1. Using a ready-made mapping function:
 #' p_value_map(.data = mtcars)
 #'
-#' # 2. Directly working with the factory:
+#' # 2. Directly working with the adverb:
 #' as_colpair_mapper(f = calc_p_value)(.data = mtcars)
 #'
 #' # 3. Calling the underlying function:

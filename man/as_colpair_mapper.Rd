@@ -68,7 +68,7 @@ p_value_map <- as_colpair_mapper(f = calc_p_value)
 # 1. Using a ready-made mapping function:
 p_value_map(.data = mtcars)
 
-# 2. Directly working with the factory:
+# 2. Directly working with the adverb:
 as_colpair_mapper(f = calc_p_value)(.data = mtcars)
 
 # 3. Calling the underlying function:
@@ -87,8 +87,9 @@ Press/Taylor and Francis Group. https://adv-r.hadley.nz/index.html.
 \itemize{
 \item This function is based on \code{corrr::colpair_map()}. For comparisons between
 them, see \code{vignette("using-pairmaps")}.
-\item The function factory is constructed using \code{rlang::new_function()}.
-\item For more information on function factories like \code{as_colpair_mapper()}, see
-Wickham (2019), ch. 10-11, and \code{vignette("factory-labels")}.
+\item The output function is constructed using \code{rlang::new_function()}.
+\item For more information on adverbs / function factories like
+\code{as_colpair_mapper()}, see Wickham (2019), ch. 10-11, and
+\code{vignette("factory-labels")}.
 }
 }
