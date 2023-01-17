@@ -14,7 +14,7 @@ as_colpair_mapper(
 )
 }
 \arguments{
-\item{f}{A function.}
+\item{f}{A function that takes two or more arguments.}
 
 \item{eval_f}{Boolean. If set to \code{FALSE}, \code{f} will appear in the output
 function by name rather than as its body and arguments. Default is \code{TRUE}.

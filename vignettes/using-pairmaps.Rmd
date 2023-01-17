@@ -40,13 +40,15 @@ max_sum_map <- as_colpair_mapper(f = max_sum)
 max_sum_map(mtcars)
 ```
 
-Use `as_colpair_mapper()` if you plan to reuse the resulting function, like `max_sum_map()`, multiple times. A new wrapper function would add little value if you only want to use it once. In this case, directly calling `corrr::colpair_map()` might be the better option.
+The mapped function, `f`, must take at least two arguments (or the dots, `...`). The first two will be the column pairs, so the function must accept vectors for them.
+
+Use `as_colpair_mapper()` if you plan to reuse the resulting function, like `max_sum_map()`, multiple times. A new wrapper function would add little value if you only want to use it once. In this case, directly calling `corrr::colpair_map()` might be the better option. Read more about `colpair_map()` in [this blogpost](https://www.tidyverse.org/blog/2020/12/corrr-0-4-3/#colpair_map).
 
 `vary()` and `covary()` are built-in examples for useful functions made by `as_colpair_mapper()`.
 
 ### More with corrr
 
-Running your data through `colpair_map()` --- directly or via a wrapper function made by `as_colpair_mapper()` --- will always return a `cor_df` tibble. `cor_df` is the same format as a data frame of correlations returned by `corrr::correlate()`, but it's not limited to computing correlations. Instead, `colpair_map()` arranges its results in this special format after applying any user-specified function which has at least two arguments.
+Running your data through `colpair_map()` --- directly or via a wrapper function made by `as_colpair_mapper()` --- will always return a `cor_df` tibble. `cor_df` is the same format as a data frame of correlations returned by `corrr::correlate()`, but it's not limited to computing correlations. Instead, `colpair_map()` arranges its results in this special format after applying any user-specified function which takes two or more arguments.
 
 This enables you to plug your analysis into any R workflow focused on data frames, but especially the corrr package's arsenal of exploratory functions. Read about them in the [*Using corrr* vignette](https://corrr.tidymodels.org/articles/using-corrr.html).
 

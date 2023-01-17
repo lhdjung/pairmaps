@@ -4,7 +4,7 @@
 #' @description `as_colpair_mapper()` takes a function `f` and returns a new
 #'   function that applies `f` to each pair of columns in a data frame.
 #'
-#' @param f A function.
+#' @param f A function that takes two or more arguments.
 #' @param eval_f Boolean. If set to `FALSE`, `f` will appear in the output
 #'   function by name rather than as its body and arguments. Default is `TRUE`.
 #'   See details.
@@ -86,6 +86,19 @@ as_colpair_mapper <- function(f, eval_f = TRUE, class = TRUE,
   f_name <- deparse(f_value)
   if (eval_f) {
     f_value <- f
+  }
+
+  # A closure must have two or more formal arguments in order to be mapped to
+  # column pairs unless it takes a variable number of arguments via the dots:
+  if (
+    length(formals(f)) < 2L &&
+    !is.primitive(f) &&
+    !("..." %in% names(formals(f)))
+  ) {
+    rlang::abort(c(
+      "`f` must take 2 or more arguments.",
+      "!" = "Without 2 formal arguments, it must support the dots, `...`."
+    ))
   }
 
   # The exact message displayed by the output function will depend on whether
