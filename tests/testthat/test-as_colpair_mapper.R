@@ -122,3 +122,14 @@ test_that("supplying arguments via the dots, `...`, leads to an error
   expect_error(as_colpair_mapper(stats::cov, TRUE, c("a", "b"), "dogs"))
 })
 
+
+test_that("named and anonymous functions evoke different messages", {
+  max_sum <- function(x, y) max(sum(x), sum(y))
+
+  msg_named <- purrr::quietly(as_colpair_mapper(max_sum))(mtcars)$messages
+  msg_anonymous <- purrr::quietly(as_colpair_mapper(function(x, y) max(sum(x), sum(y))))(mtcars)$messages
+
+  expect_false(msg_named == msg_anonymous)
+})
+
+
