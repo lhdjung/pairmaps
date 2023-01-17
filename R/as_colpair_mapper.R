@@ -90,8 +90,10 @@ as_colpair_mapper <- function(f, eval_f = TRUE, class = TRUE,
 
   # The exact message displayed by the output function will depend on whether
   # `f` is a named function, and `f_name` is therefore defined as its name, or
-  # an anonymous function, in which case `f_name` is the definition itself:
-  if (exists(f_name)) {
+  # an anonymous function, in which case `f_name` is the definition itself.
+  # Namespace specifications are removed within the condition because they would
+  # otherwise lead to a false negative in `exists()`:
+  if (exists(sub(".*::", "", f_name))) {
     msg_apply <- paste0("Applying `", f_name, "()` to each column pair")
   } else {
     msg_apply <- paste0(
@@ -120,14 +122,10 @@ as_colpair_mapper <- function(f, eval_f = TRUE, class = TRUE,
     body = rlang::expr({
       f_name <- `!!`(f_name)
       out <- corrr::colpair_map(
-        .data = .data, .f = `!!`(f_value),
-        ..., .diagonal = .diagonal
+        .data = .data, .f = `!!`(f_value), ..., .diagonal = .diagonal
       )
       if (!.quiet) {
-        rlang::inform(c(
-          "i" = `!!`(msg_apply)
-          # "i" = paste0("Applying `", f_name, "()` to each column pair")
-        ))
+        rlang::inform(c("i" = `!!`(msg_apply)))
       }
       `!!`(class_expr)
       out
@@ -137,7 +135,7 @@ as_colpair_mapper <- function(f, eval_f = TRUE, class = TRUE,
   )
 
   # Garbage collection is important within function factories:
-  rm(f_value, f_name, class_expr)
+  rm(f_value, f_name, msg_apply, class_expr)
 
   # Remove the `class_expr` placeholder from the function body if the user chose
   # not to make the output function attach a signature class to its data frames:
