@@ -98,7 +98,9 @@ as_colpair_mapper <- function(f, eval_f = TRUE, class = TRUE,
   ) {
     rlang::abort(c(
       "`f` must take 2 or more arguments.",
-      "!" = "Without 2 formal arguments, it must support the dots, `...`."
+      "i" = "Either of these must be true:",
+      "*" = "It has 2 or more formal arguments.",
+      "*" = "It supports the dots, `...`."
     ))
   }
 
