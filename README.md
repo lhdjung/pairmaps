@@ -21,8 +21,8 @@ You can avoid pairmaps as a dependency by copying and pasting the
 functions returned by `as_colpair_mapper()` into your source code.
 
 pairmaps is an unofficial add-on to
-[corrr](https://corrr.tidymodels.org/). It doesn’t have any dependencies
-beyond those of corrr (and corrr itself).
+[corrr](https://corrr.tidymodels.org/). Its functions don’t have any
+dependencies beyond those of corrr (and corrr itself).
 
 ## Installation
 
