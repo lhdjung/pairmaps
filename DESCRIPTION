@@ -22,7 +22,6 @@ Suggests:
     devtools,
     knitr,
     purrr,
-    rlang,
     rmarkdown,
     stats,
     testthat
@@ -30,3 +29,5 @@ VignetteBuilder: knitr
 URL: https://github.com/lhdjung/pairmaps,
     https://lhdjung.github.io/pairmaps/
 BugReports: https://github.com/lhdjung/pairmaps/issues
+Imports: 
+    rlang
