@@ -20,7 +20,7 @@ knitr::opts_chunk$set(
 devtools::load_all(".")
 ```
 
-Functions like `as_colpair_mapper()` are sometimes called "adverbs" because they modify the behavior of existing functions (i.e., "verbs"). Other examples are `purrr::safely()` and `widyr::widely()`.
+Functions like `as_colpair_mapper()` are sometimes called "adverbs" because they modify the behavior of existing functions (i.e., "verbs"). Other examples are `purrr::safely()` and [`widyr::widely()`](https://juliasilge.github.io/widyr/reference/widely.html).
 
 A more technical term is *function operator*, a special kind of *function factory*. The latter refers to any function that returns a function. In this way, function operators are simply function factories that take one or more functions as input (Wickham 2019, [ch. 10-11](https://adv-r.hadley.nz/function-factories.html)).
 
