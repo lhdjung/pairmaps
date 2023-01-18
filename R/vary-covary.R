@@ -34,11 +34,11 @@
 #'
 #' covary(mtcars)
 
-vary <- as_colpair_mapper(stats::var)
+vary <- as_colpair_mapper(stats::var, eval_f = FALSE)
 
 
 #' @rdname vary-covary
 #' @export
 
-covary <- as_colpair_mapper(stats::cov)
+covary <- as_colpair_mapper(stats::cov, eval_f = FALSE)
 

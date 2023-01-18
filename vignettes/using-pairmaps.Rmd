@@ -83,7 +83,9 @@ max_sum_map <- as_colpair_mapper(
 as_colpair_mapper(f = max_sum, eval_f = FALSE)
 ```
 
-This is useful if you want to copy and paste the printed output into a script, especially within a package. (See below if you don't work inside of a package.) The default, `eval_f = TRUE`, would replace the name of `max_sum()` by its function definition --- i.e., its list of arguments along with the entire function body:
+This is useful if you want to copy and paste the printed output into a script, especially within a package. Always set `eval_f` to `FALSE` if you *call* `as_colpair_mapper()` inside a package. (See below for non-package use cases.)
+
+The default, `eval_f = TRUE`, would replace the name of `max_sum()` by its function definition --- i.e., its list of arguments along with the entire function body:
 
 ```{r}
 as_colpair_mapper(f = max_sum)
