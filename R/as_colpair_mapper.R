@@ -104,18 +104,8 @@ as_colpair_mapper <- function(f, eval_f = TRUE, class = TRUE,
     ))
   }
 
-  # The exact message displayed by the output function will depend on whether
-  # `f` is a named function, and `f_name` is therefore defined as its name, or
-  # an anonymous function, in which case `f_name` is the definition itself.
-  # Namespace specifications are removed within the condition because they would
-  # otherwise lead to a false negative in `exists()`:
-  if (exists(sub(".*::", "", f_name))) {
-    msg_apply <- paste0("Applying `", f_name, "()` to each column pair")
-  } else {
-    msg_apply <- paste0(
-      "Applying anonymous function to each column pair:\n`", f_name, "`"
-    )
-  }
+  # Prepare a message about `f` which the output function will emit by default:
+  msg_apply <- paste0("Applying `", f_name, "` to each column pair")
 
   # Also by default, add a `"pairmaps_df_"` class that captures the name of `f`:
   if (class) {
