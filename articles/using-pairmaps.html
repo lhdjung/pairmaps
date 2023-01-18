@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">pairmaps</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -202,10 +202,12 @@ function will appear within the output function by name only. Look at
 <span><span class="co">#&gt;     out</span></span>
 <span><span class="co">#&gt; }</span></span></code></pre></div>
 <p>This is useful if you want to copy and paste the printed output into
-a script, especially within a package. (See below if you don’t work
-inside of a package.) The default, <code>eval_f = TRUE</code>, would
-replace the name of <code>max_sum()</code> by its function definition —
-i.e., its list of arguments along with the entire function body:</p>
+a script, especially within a package. Always set <code>eval_f</code> to
+<code>FALSE</code> if you <em>call</em> <code><a href="../reference/as_colpair_mapper.html">as_colpair_mapper()</a></code>
+inside a package. (See below for non-package use cases.)</p>
+<p>The default, <code>eval_f = TRUE</code>, would replace the name of
+<code>max_sum()</code> by its function definition — i.e., its list of
+arguments along with the entire function body:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/as_colpair_mapper.html">as_colpair_mapper</a></span><span class="op">(</span>f <span class="op">=</span> <span class="va">max_sum</span><span class="op">)</span></span>
 <span><span class="co">#&gt; function (.data, ..., .diagonal = NA, .quiet = FALSE) </span></span>
