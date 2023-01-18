@@ -12,7 +12,7 @@ function that applies f to each pair of columns in a data frame."><!-- mathjax -
     
     <a class="navbar-brand me-2" href="../index.html">pairmaps</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -150,8 +150,7 @@ them, see <code><a href="../articles/using-pairmaps.html">vignette("using-pairma
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># 1. Using a ready-made mapping function:</span></span></span>
 <span class="r-in"><span><span class="fu">p_value_map</span><span class="op">(</span>.data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">ℹ</span> Applying anonymous function to each column pair:</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> `calc_p_value`</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">ℹ</span> Applying `calc_p_value` to each column pair</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 11 × 12</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    term        mpg       cyl      disp        hp      drat        wt      qsec</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
@@ -170,8 +169,7 @@ them, see <code><a href="../articles/using-pairmaps.html">vignette("using-pairma
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># 2. Directly working with the adverb:</span></span></span>
 <span class="r-in"><span><span class="fu">as_colpair_mapper</span><span class="op">(</span>f <span class="op">=</span> <span class="va">calc_p_value</span><span class="op">)</span><span class="op">(</span>.data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">ℹ</span> Applying anonymous function to each column pair:</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> `calc_p_value`</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">ℹ</span> Applying `calc_p_value` to each column pair</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 11 × 12</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    term        mpg       cyl      disp        hp      drat        wt      qsec</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>

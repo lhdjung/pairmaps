@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">pairmaps</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -98,7 +98,7 @@ example:</p>
 <span><span class="op">}</span></span>
 <span><span class="va">max_sum_map</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/as_colpair_mapper.html">as_colpair_mapper</a></span><span class="op">(</span>f <span class="op">=</span> <span class="va">max_sum</span><span class="op">)</span></span>
 <span><span class="fu">max_sum_map</span><span class="op">(</span><span class="va">mtcars</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB;">ℹ</span> Applying `max_sum()` to each column pair</span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">ℹ</span> Applying `max_sum` to each column pair</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 11 × 12</span></span></span>
 <span><span class="co">#&gt;    term    mpg   cyl  disp    hp  drat    wt  qsec    vs    am  gear  carb</span></span>
 <span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
@@ -196,7 +196,7 @@ function will appear within the output function by name only. Look at
 <span><span class="co">#&gt;     out &lt;- corrr::colpair_map(.data = .data, .f = max_sum, ..., </span></span>
 <span><span class="co">#&gt;         .diagonal = .diagonal)</span></span>
 <span><span class="co">#&gt;     if (!.quiet) {</span></span>
-<span><span class="co">#&gt;         rlang::inform(c(i = "Applying `max_sum()` to each column pair"))</span></span>
+<span><span class="co">#&gt;         rlang::inform(c(i = "Applying `max_sum` to each column pair"))</span></span>
 <span><span class="co">#&gt;     }</span></span>
 <span><span class="co">#&gt;     class(out) &lt;- c(paste0("pairmaps_df_", f_name), class(out))</span></span>
 <span><span class="co">#&gt;     out</span></span>
@@ -217,7 +217,7 @@ i.e., its list of arguments along with the entire function body:</p>
 <span><span class="co">#&gt;         max(sum(x), sum(y))</span></span>
 <span><span class="co">#&gt;     }, ..., .diagonal = .diagonal)</span></span>
 <span><span class="co">#&gt;     if (!.quiet) {</span></span>
-<span><span class="co">#&gt;         rlang::inform(c(i = "Applying `max_sum()` to each column pair"))</span></span>
+<span><span class="co">#&gt;         rlang::inform(c(i = "Applying `max_sum` to each column pair"))</span></span>
 <span><span class="co">#&gt;     }</span></span>
 <span><span class="co">#&gt;     class(out) &lt;- c(paste0("pairmaps_df_", f_name), class(out))</span></span>
 <span><span class="co">#&gt;     out</span></span>
@@ -255,7 +255,7 @@ assign it to a variable straight away, setting <code>eval_f</code> to
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">sum1</span>, <span class="va">sum2</span>, <span class="va">sum3</span><span class="op">)</span></span>
 <span><span class="op">}</span></span>
 <span><span class="fu">max_sum_map</span><span class="op">(</span><span class="va">mtcars</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB;">ℹ</span> Applying `max_sum()` to each column pair</span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">ℹ</span> Applying `max_sum` to each column pair</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 11 × 12</span></span></span>
 <span><span class="co">#&gt;    term     mpg    cyl   disp     hp   drat     wt   qsec     vs     am   gear</span></span>
 <span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
@@ -319,7 +319,7 @@ retrieve any earlier functions by the same name.</p>
 <span><span class="op">}</span></span>
 <span><span class="va">max_sum_map</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/as_colpair_mapper.html">as_colpair_mapper</a></span><span class="op">(</span>f <span class="op">=</span> <span class="va">max_sum</span><span class="op">)</span></span>
 <span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu">max_sum_map</span><span class="op">(</span><span class="va">mtcars</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB;">ℹ</span> Applying `max_sum()` to each column pair</span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">ℹ</span> Applying `max_sum` to each column pair</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/get_mapped_function.html">get_mapped_function</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span>
 <span><span class="co">#&gt; function(x, y) {</span></span>
