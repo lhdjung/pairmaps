@@ -83,7 +83,12 @@ max_sum_map <- as_colpair_mapper(
 as_colpair_mapper(f = max_sum, eval_f = FALSE)
 ```
 
-This is useful if you want to copy and paste the printed output into a script, especially within a package. Always set `eval_f` to `FALSE` if you *call* `as_colpair_mapper()` inside a package. (See below for non-package use cases.)
+This is useful if you want to copy and paste the printed output into a script, especially within a package. Always set `eval_f` to `FALSE` if you *call* `as_colpair_mapper()` inside a package. (See below for non-package use cases.) For example, `vary()` and `covary()` are defined like this within pairmaps:
+
+```{r eval=FALSE}
+vary <- as_colpair_mapper(stats::var, eval_f = FALSE)
+covary <- as_colpair_mapper(stats::cov, eval_f = FALSE)
+```
 
 The default, `eval_f = TRUE`, would replace the name of `max_sum()` by its function definition --- i.e., its list of arguments along with the entire function body:
 
