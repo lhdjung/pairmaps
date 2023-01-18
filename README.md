@@ -35,7 +35,9 @@ remotes::install_github("lhdjung/pairmaps")
 
 ## Get started
 
-Go to `vignette("using-pairmaps")`.
+Go to the [*Using
+pairmaps*](https://lhdjung.github.io/pairmaps/articles/using-pairmaps.html)
+vignette.
 
 ## Acknowledgements
 
