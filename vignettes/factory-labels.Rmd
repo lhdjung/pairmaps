@@ -59,4 +59,4 @@ Sticking to the same few terms is advisable in any case, lest somebody points ou
 
 ## References
 
-Wickham, H. (2019). *Advanced R* (Second Edition), CRC Press/Taylor and Francis Group. https://adv-r.hadley.nz/index.html.
+Wickham, H. (2019). *Advanced R* (Second Edition), CRC Press/Taylor and Francis Group. <https://adv-r.hadley.nz/index.html>.
