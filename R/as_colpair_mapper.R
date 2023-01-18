@@ -110,7 +110,7 @@ as_colpair_mapper <- function(f, eval_f = TRUE, class = TRUE,
   # Also by default, add a `"pairmaps_df_"` class that captures the name of `f`:
   if (class) {
     class_expr <- rlang::expr(
-      class(out) <- c(paste0("pairmaps_df_", f_name), class(out))
+      class(out) <- c(!!paste0("pairmaps_df_", f_name), class(out))
     )
   } else {
     class_expr <- NULL
@@ -126,13 +126,12 @@ as_colpair_mapper <- function(f, eval_f = TRUE, class = TRUE,
     ),
     # 2. Body code
     body = rlang::expr({
-      f_name <- `!!`(f_name)
-      out <- corrr::colpair_map(
-        .data = .data, .f = `!!`(f_value), ..., .diagonal = .diagonal
-      )
       if (!.quiet) {
         rlang::inform(c("i" = `!!`(msg_apply)))
       }
+      out <- corrr::colpair_map(
+        .data = .data, .f = `!!`(f_value), ..., .diagonal = .diagonal
+      )
       `!!`(class_expr)
       out
     }),
