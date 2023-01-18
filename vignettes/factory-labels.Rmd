@@ -57,8 +57,6 @@ All things considered, it seems wise of the developer community to speak of adve
 
 Sticking to the same few terms is advisable in any case, lest somebody points out that `as_colpair_mapper()` is actually an adverbial phrase.
 
-### Citation dummy {style="display: none;"}
-
-*(Here is an extra section. Its display is suppressed via the CSS element `display: none;` because its only purpose is to generate the citation @wickham2019 --- I want to style the citation in the text above more flexibly than the format allows (including a URL) but still get the reference pasted at the bottom.)*
-
 ## References
+
+Wickham, H. (2019). *Advanced R* (Second Edition), CRC Press/Taylor and Francis Group. https://adv-r.hadley.nz/index.html.

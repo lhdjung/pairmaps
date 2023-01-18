@@ -164,8 +164,6 @@ is_pairmaps_df(iris)
 
 `get_mapped_function()` and `get_mapped_function_name()` internally call `is_pairmaps_df()` to make sure they actually deal with such a data frame. If the test fails, they will throw an error.
 
-### Citation dummy {style="display: none;"}
-
-*(Here is an extra section. Its display is suppressed via the CSS element `display: none;` because its only purpose is to generate the citation @wickham2019 --- I want to style the citation in the text above more flexibly than the format allows (including a URL) but still get the reference pasted at the bottom.)*
-
 ## References
+
+Wickham, H. (2019). *Advanced R* (Second Edition), CRC Press/Taylor and Francis Group. https://adv-r.hadley.nz/index.html.
