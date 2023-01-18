@@ -1,5 +1,5 @@
 Package: pairmaps
-Title: New Column-Pair Mapping Functions
+Title: New column-pair mapping functions
 Version: 0.1.0.9000
 Authors@R: 
     person("Lukas", "Jung", , "jung-lukas@gmx.net", role = c("aut", "cre"))
