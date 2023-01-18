@@ -204,11 +204,16 @@ function will appear within the output function by name only. Look at
 <p>This is useful if you want to copy and paste the printed output into
 a script, especially within a package. Always set <code>eval_f</code> to
 <code>FALSE</code> if you <em>call</em> <code><a href="../reference/as_colpair_mapper.html">as_colpair_mapper()</a></code>
-inside a package. (See below for non-package use cases.)</p>
+inside a package. (See below for non-package use cases.) For example,
+<code><a href="../reference/vary-covary.html">vary()</a></code> and <code><a href="../reference/vary-covary.html">covary()</a></code> are defined like this
+within pairmaps:</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">vary</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/as_colpair_mapper.html">as_colpair_mapper</a></span><span class="op">(</span><span class="fu">stats</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/r/stats/cor.html" class="external-link">var</a></span>, eval_f <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="va">covary</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/as_colpair_mapper.html">as_colpair_mapper</a></span><span class="op">(</span><span class="fu">stats</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/r/stats/cor.html" class="external-link">cov</a></span>, eval_f <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 <p>The default, <code>eval_f = TRUE</code>, would replace the name of
 <code>max_sum()</code> by its function definition — i.e., its list of
 arguments along with the entire function body:</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/as_colpair_mapper.html">as_colpair_mapper</a></span><span class="op">(</span>f <span class="op">=</span> <span class="va">max_sum</span><span class="op">)</span></span>
 <span><span class="co">#&gt; function (.data, ..., .diagonal = NA, .quiet = FALSE) </span></span>
 <span><span class="co">#&gt; {</span></span>
@@ -245,7 +250,7 @@ the reverse problem. If you don’t copy and paste the output function but
 assign it to a variable straight away, setting <code>eval_f</code> to
 <code>FALSE</code> might lead to a subtle issue with lazy evaluation
 (Wickham 2019, <a href="https://adv-r.hadley.nz/function-factories.html#forcing-evaluation" class="external-link">ch. 10.2.3</a>):</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">max_sum</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="op">}</span></span>
@@ -287,7 +292,7 @@ original value of <code>max_sum()</code> right when
 default <code>eval_f = TRUE</code> provides this safety.</p>
 <p>If the new value can’t be interpreted as a function, the bug doesn’t
 occur but an error is thrown:</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">max_sum</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="op">}</span></span>
@@ -315,7 +320,7 @@ function was applied to the column pairs, you can call
 will return the function as it is defined the moment you call
 <code><a href="../reference/get_mapped_function.html">get_mapped_function()</a></code>. This means you can’t use it to
 retrieve any earlier functions by the same name.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">max_sum</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="op">}</span></span>
@@ -329,13 +334,13 @@ retrieve any earlier functions by the same name.</p>
 <span><span class="co">#&gt; }</span></span></code></pre></div>
 <p>If you need the name of the mapped function, call
 <code><a href="../reference/get_mapped_function.html">get_mapped_function_name()</a></code> instead:</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/get_mapped_function.html">get_mapped_function_name</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "max_sum"</span></span></code></pre></div>
 <p>Sometimes, you may not be sure if a data frame was returned by a
 function which, in turn, was made by <code><a href="../reference/as_colpair_mapper.html">as_colpair_mapper()</a></code>.
 Test this with <code><a href="../reference/is_pairmaps_df.html">is_pairmaps_df()</a></code>:</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/is_pairmaps_df.html">is_pairmaps_df</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] TRUE</span></span>
 <span><span class="fu"><a href="../reference/is_pairmaps_df.html">is_pairmaps_df</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span></span>
